@@ -481,12 +481,10 @@ function buildCertificateFront(aluno){
     <div class="corner tr"></div>
     <div class="corner bl"></div>
     <div class="diag-mark2">
-      <svg width="70" height="180" viewBox="0 0 70 180"><polygon points="70,180 20,180 70,60" fill="#2ea39a"/><polygon points="70,150 40,150 70,90" fill="#c9cdc4"/></svg>
+      <svg width="70" height="100" viewBox="0 0 70 180"><polygon points="70,180 20,180 70,60" fill="#2ea39a"/><polygon points="70,150 40,150 70,90" fill="#c9cdc4"/></svg>
     </div>
-    <div class="kilo-logo">
-      ${kiloLogoSVG()}
-      <div class="kilo-word">KILO</div>
-      <div class="kilo-sub">Q H S E</div>
+    <div class="kilo-logo-container">
+      <img class="kilo-logo" src="https://i.ibb.co/WWptT6Nc/PHOTO-2025-10-16-10-27-09-removebg-preview.png" alt="Kilo Logo">
     </div>
     <div class="cert-title">CERTIFICADO</div>
     <div class="cert-body">
@@ -510,6 +508,7 @@ function buildCertificateBack(aluno){
     <div class="content-foot">
       <div class="loc">Realizado em ${c.localTreinamento}</div>
       <div class="sig-line-portador">Assinatura de ${aluno.nome}</div>
+      <div class="cpf">CPF: ${aluno.cpf} </div>
     </div>
   </div>`;
 }
