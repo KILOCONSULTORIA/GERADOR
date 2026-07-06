@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login — Gerador de Certificados KILO</title>
+<style>
+  :root{
+    --teal-900:#0f3d3e;
+    --teal-700:#1f7a75;
+    --teal-500:#2ea39a;
+    --teal-100:#e4f3f1;
+    --stone-900:#20241f;
+    --stone-600:#5b6058;
+    --stone-300:#c9cdc4;
+    --stone-100:#f4f5f2;
+    --paper:#ffffff;
+    --danger:#b3412c;
+    --radius:10px;
+    --font-face: Arial, Helvetica, sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;height:100%;background:var(--teal-900);font-family:var(--font-face);color:var(--stone-900);}
+  body{
+    min-height:100vh;display:flex;align-items:center;justify-content:center;
+    background:radial-gradient(circle at 20% 20%, #164e4f 0%, var(--teal-900) 55%);
+    padding:20px;
+  }
+  .login-card{
+    background:var(--paper);border-radius:14px;box-shadow:0 20px 60px rgba(0,0,0,.35);
+    width:100%;max-width:380px;padding:34px 32px 30px;
+  }
+  .brand{display:flex;align-items:center;gap:10px;margin-bottom:24px;}
+  .brand-mark{width:36px;height:36px;flex-shrink:0;}
+  .brand-mark svg{width:100%;height:100%;}
+  .brand-text{font-weight:700;font-size:18px;color:var(--teal-900);line-height:1.1;}
+  .brand-text small{display:block;font-weight:400;font-size:11px;color:var(--stone-600);letter-spacing:.4px;text-transform:uppercase;margin-top:3px;}
+
+  h1{font-size:19px;margin:0 0 6px;color:var(--teal-900);font-weight:700;}
+  .sub{margin:0 0 22px;color:var(--stone-600);font-size:13px;line-height:1.5;}
+
+  label{display:block;font-size:12px;font-weight:700;color:var(--stone-600);margin-bottom:6px;text-transform:uppercase;letter-spacing:.4px;}
+  .field{margin-bottom:16px;}
+  input[type=password],input[type=text]{
+    width:100%;padding:11px 12px;border:1px solid var(--stone-300);border-radius:7px;font-size:14px;
+    font-family:var(--font-face);background:#fff;color:var(--stone-900);
+  }
+  input:focus{outline:2px solid var(--teal-500);outline-offset:1px;border-color:var(--teal-500);}
+
+  .btn{
+    width:100%;border:1px solid var(--teal-900);background:var(--teal-900);color:#fff;
+    padding:11px 16px;border-radius:7px;font-size:14px;font-weight:700;cursor:pointer;
+    font-family:var(--font-face);transition:background .15s;
+  }
+  .btn:hover{background:var(--teal-700);}
+  .btn:active{transform:scale(.99);}
+
+  .error-msg{
+    display:none;background:#fbeae6;color:var(--danger);border:1px solid #e3b6ab;
+    padding:9px 12px;border-radius:7px;font-size:13px;margin-bottom:16px;
+  }
+  .error-msg.show{display:block;}
+
+  .foot-note{margin-top:20px;font-size:11.5px;color:var(--stone-600);text-align:center;line-height:1.5;}
+</style>
+</head>
+<body>
+
+<div class="login-card">
+  <div class="brand">
+    <div class="brand-mark">
+      <svg viewBox="0 0 40 40"><polygon points="0,40 18,40 40,0 22,0" fill="#2ea39a"/><polygon points="16,40 26,40 40,14 32,14" fill="#c9cdc4"/></svg>
+    </div>
+    <div class="brand-text">Certifica<small>Painel de emissão · KILO</small></div>
+  </div>
+
+  <h1>Acesso restrito</h1>
+  <p class="sub">Informe a senha de acesso para entrar no gerador de certificados.</p>
+
+  <div class="error-msg" id="errorMsg">Senha incorreta. Tente novamente.</div>
+
+  <form id="loginForm" autocomplete="off">
+    <div class="field">
+      <label for="senha">Senha</label>
+      <input type="password" id="senha" placeholder="Digite a senha" autofocus>
+    </div>
+    <button class="btn" type="submit">Entrar</button>
+  </form>
+
+  <p class="foot-note">O acesso fica liberado apenas nesta aba, enquanto ela estiver aberta.</p>
+</div>
+
+<script>
+  // ---- Senha de acesso ----
+  // Altere o valor abaixo para a senha desejada.
+  const SENHA_CORRETA = "kilo2026";
+
+  // Para onde redirecionar após o login (ajuste se o arquivo principal tiver outro nome)
+  const DESTINO = "gerador_certificados.html";
+
+  const form = document.getElementById('loginForm');
+  const senhaInput = document.getElementById('senha');
+  const errorMsg = document.getElementById('errorMsg');
+
+  // Se já estiver autenticado nesta sessão, pula direto para o gerador
+  if (sessionStorage.getItem('kiloCertAuth') === '1') {
+    window.location.replace(DESTINO);
+  }
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    if (senhaInput.value === SENHA_CORRETA) {
+      sessionStorage.setItem('kiloCertAuth', '1');
+      window.location.href = DESTINO;
+    } else {
+      errorMsg.classList.add('show');
+      senhaInput.value = '';
+      senhaInput.focus();
+    }
+  });
+</script>
+
+</body>
+</html>
